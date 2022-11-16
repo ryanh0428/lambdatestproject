@@ -1,17 +1,17 @@
 from os import environ
-
+from dotenv import load_dotenv
 import pytest
 from selenium import webdriver
 from selenium.webdriver.remote.remote_connection import RemoteConnection
+
+load_dotenv()
 
 
 @pytest.fixture(scope='function')
 def driver(request):
     desired_caps = {
-   
-  }
 
-    
+    }
 
     browser = {
         "build": "Sample PY Build",
@@ -26,7 +26,8 @@ def driver(request):
     tunnel_id = environ.get('TUNNEL', False)
     username = environ.get('LT_USERNAME', None)
     access_key = environ.get('LT_ACCESS_KEY', None)
-    selenium_endpoint = "https://ryanh04281234:WUz09JqYIdtUeCJKM8CI3Xs0KAT2zkSp5ITCaN8Yn4nZ9ZHarN@hub.lambdatest.com/wd/hub"
+    selenium_endpoint = "https://{}:{}@hub.lambdatest.com/wd/hub".format(
+        username, access_key)
     desired_caps['build'] = build
     desired_caps['name'] = test_name
     desired_caps['video'] = True

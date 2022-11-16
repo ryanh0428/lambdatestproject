@@ -6,6 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 
+from tests.page_object_model.login_page import LoginPage
+
 
 scenarios('../features/login.feature')
 
@@ -32,13 +34,12 @@ def sauce_demo(browser):
 
 @when(parsers.parse('the user type in the user name "{username}" and password "{password}"'))
 def user_type_in_info(browser, username, password):
-    username_field = browser.find_element(
-        By.CSS_SELECTOR, "input[placeholder='Username']")
-    username_field.send_keys(username)
+    login_page = LoginPage(browser)
+    login_page.input_username(username)
     password_field = browser.find_element(
         By.XPATH, "//*[@placeholder='Password']")
     password_field.send_keys(password)
-    browser.find_element(By.ID, "login-button").click()
+    browser.find_element(By.ID, "login-button").submit()
 
 
 @then(parsers.parse('the user is directed to inventory page "{inventory_page}"'))
