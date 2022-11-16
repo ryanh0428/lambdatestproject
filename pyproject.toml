@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "lambdatestsaucedemo"
+version = "0.1.0"
+description = ""
+authors = ["Ryan HO <ryan.ho@fdmgroup.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selenium = "^4.6.0"
+pytest = "^7.2.0"
+pytest-bdd = "^6.1.1"
+autopep8 = "^2.0.0"
+flake8 = "^5.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
