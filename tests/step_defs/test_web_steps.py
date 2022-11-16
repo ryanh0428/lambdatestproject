@@ -1,4 +1,5 @@
 import pytest
+import time
 from pytest_bdd import scenarios, given, when, then, parsers
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -36,13 +37,29 @@ def sauce_demo(browser):
 def user_type_in_info(browser, username, password):
     login_page = LoginPage(browser)
     login_page.input_username(username)
-    password_field = browser.find_element(
-        By.XPATH, "//*[@placeholder='Password']")
-    password_field.send_keys(password)
-    browser.find_element(By.ID, "login-button").submit()
+    login_page.input_password(password)
+    login_page.click_login()
 
 
 @then(parsers.parse('the user is directed to inventory page "{inventory_page}"'))
 def check_url(browser, inventory_page):
+    assert inventory_page in browser.current_url
 
-    assert WebDriverWait(browser, 10).until(EC.url_to_be(inventory_page))
+
+@when('the user click the filter menu on the right hand side')
+def click_filter_menu(browser):
+    # browser.find_element(By.XPATH, "//*[text()='Name (Z to A)']").click()
+    # time.sleep(2)
+    browser.find_element(By.XPATH, "//select").click()
+    time.sleep(2)
+
+
+@then(parsers.parse('{option_number} options is avilable to user: "{option1}","{option2}","{option3}","{option4}"'), converters={"option_number": int})
+def check_all_options_are_available(browser, option1, option2, option3, option4, option_number):
+    list_of_option = browser.find_elements(By.XPATH, '//option')
+    list_of_option_text = [element.text for element in list_of_option]
+    assert option1 in list_of_option_text
+    assert option2 in list_of_option_text
+    assert option3 in list_of_option_text
+    assert option4 in list_of_option_text
+    assert len(list_of_option) == option_number

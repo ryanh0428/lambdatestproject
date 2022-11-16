@@ -12,6 +12,9 @@ class LoginPage:
     def input_password(self, password: str):
         self.map.password_box().send_keys(password)
 
+    def click_login(self):
+        self.map.submit_button().submit()
+
 
 class LoginPageMap:
     def __init__(self, driver: webdriver):
@@ -24,4 +27,4 @@ class LoginPageMap:
         return self._driver.find_element(By.XPATH, "//*[@placeholder='Password']")
 
     def submit_button(self):
-        return self
+        return self._driver.find_element(By.ID, "login-button")
