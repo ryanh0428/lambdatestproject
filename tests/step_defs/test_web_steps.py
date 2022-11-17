@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+from tests.page_object_model.items_page import Items_page
 
 from tests.page_object_model.login_page import LoginPage
 
@@ -56,10 +57,10 @@ def click_filter_menu(browser):
 
 @then(parsers.parse('{option_number} options is avilable to user: "{option1}","{option2}","{option3}","{option4}"'), converters={"option_number": int})
 def check_all_options_are_available(browser, option1, option2, option3, option4, option_number):
-    list_of_option = browser.find_elements(By.XPATH, '//option')
-    list_of_option_text = [element.text for element in list_of_option]
-    assert option1 in list_of_option_text
-    assert option2 in list_of_option_text
-    assert option3 in list_of_option_text
-    assert option4 in list_of_option_text
-    assert len(list_of_option) == option_number
+    items_page = Items_page(browser)
+
+    assert option1 in items_page.list_of_option_text()
+    assert option2 in items_page.list_of_option_text()
+    assert option3 in items_page.list_of_option_text()
+    assert option4 in items_page.list_of_option_text()
+    assert len(items_page.list_of_option_text()) == option_number
