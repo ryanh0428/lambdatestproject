@@ -10,20 +10,28 @@ load_dotenv()
 @pytest.fixture(scope='function')
 def driver(request):
     desired_caps = {
-
+        "browserName": "",
+        "browserVersion": "",
+        "LT:Options": {
+            "platformName": "Windows 11",
+            "build": "bdd test",
+            "project": "sauce demo website test",
+            "name": "sauce website function",
+            "w3c": True,
+            "plugin": "python-pytest"
+        }
     }
 
     browser = {
-        "build": "Sample PY Build",
-        "platformName": "Windows 11",
-        "browserName": "Chrome",
-        "browserVersion": "latest",
+        "browserName": "Edge",
+        "browserVersion": "108.0",
+        "platform": "Windows 11"
     }
 
     desired_caps.update(browser)
     test_name = request.node.name
     build = environ.get('BUILD', "Sample PY Build")
-    tunnel_id = environ.get('TUNNEL', False)
+    tunnel_id = environ.get('TUNNEL', True)
     username = environ.get('LT_USERNAME', None)
     access_key = environ.get('LT_ACCESS_KEY', None)
     selenium_endpoint = "https://{}:{}@hub.lambdatest.com/wd/hub".format(

@@ -9,6 +9,6 @@ Feature: sauce website function
         Then 4 options is avilable to user: "Name (A to Z)","Name (Z to A)","Price (low to high)","Price (high to low)"
         When the user click the "Price (low to high)" option
         Then the item will arrange in ascending order
-        When the user pick the first item
-        Then the shopping cart showing the number 1
-        And the text on the button change to "Remove"
+# When the user pick the first item
+# Then the shopping cart showing the number 1
+# And the text on the button change to "Remove"

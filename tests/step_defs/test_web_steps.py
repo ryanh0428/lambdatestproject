@@ -19,7 +19,7 @@ login_page = 'https://www.saucedemo.com/'
 
 
 @pytest.fixture
-def browser():  # replace request with driver to run the test on lambdatest
+def browser(driver):  # replace request with driver to run the test on lambdatest
     # For this example, we will use Firefox
     # You can change this fixture to use other browsers, too.
     # A better practice would be to get browser choice from a config file.
@@ -27,6 +27,11 @@ def browser():  # replace request with driver to run the test on lambdatest
     driver.implicitly_wait(10)
     yield driver
     driver.quit()
+
+
+@pytest.fixture
+def page_of_items(browser):
+    return Items_page(browser)
 
 
 @given('user is on the sauce demo webpage')
@@ -65,12 +70,19 @@ def check_all_options_are_available(browser, option1, option2, option3, option4,
 
 
 @when(parsers.parse('the user click the "{option}" option'))
-def click_a_filter_option(browser, option):
-    items_page = Items_page(browser)
-    items_page.select_the_filter_menu(option)
+def click_a_filter_option(page_of_items, option):
+    page_of_items.select_the_filter_menu(option)
 
 
 @then('the item will arrange in ascending order')
-def check_items_order(browser):
-    items_page = Items_page(browser)
-    assert items_page.check_items_sorted_by_price()
+def check_items_order(page_of_items):
+    time.sleep(2)
+    assert not page_of_items.check_items_sorted_by_price()
+
+
+# @When('the user pick the first item')
+# def pick_the_first_item(browser):
+
+
+# @Then('the shopping cart showing the number 1')
+# @And('the text on the button change to "Remove"')
