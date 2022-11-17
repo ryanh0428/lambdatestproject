@@ -49,10 +49,8 @@ def check_url(browser, inventory_page):
 
 @when('the user click the filter menu on the right hand side')
 def click_filter_menu(browser):
-    # browser.find_element(By.XPATH, "//*[text()='Name (Z to A)']").click()
-    # time.sleep(2)
+
     browser.find_element(By.XPATH, "//select").click()
-    time.sleep(2)
 
 
 @then(parsers.parse('{option_number} options is avilable to user: "{option1}","{option2}","{option3}","{option4}"'), converters={"option_number": int})
@@ -64,3 +62,15 @@ def check_all_options_are_available(browser, option1, option2, option3, option4,
     assert option3 in items_page.list_of_option_text()
     assert option4 in items_page.list_of_option_text()
     assert len(items_page.list_of_option_text()) == option_number
+
+
+@when(parsers.parse('the user click the "{option}" option'))
+def click_a_filter_option(browser, option):
+    items_page = Items_page(browser)
+    items_page.select_the_filter_menu(option)
+
+
+@then('the item will arrange in ascending order')
+def check_items_order(browser):
+    items_page = Items_page(browser)
+    assert items_page.check_items_sorted_by_price()
