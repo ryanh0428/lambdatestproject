@@ -8,7 +8,7 @@ load_dotenv()
 
 
 @pytest.fixture(scope='function')
-def driver(request):
+def driverlambda(request):
     desired_caps = {
         "browserName": "",
         "browserVersion": "",
