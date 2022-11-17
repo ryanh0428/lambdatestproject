@@ -19,7 +19,7 @@ login_page = 'https://www.saucedemo.com/'
 
 
 # @pytest.mark.usefixtures('driver')
-@pytest.fixture
+@pytest.fixture(scope='module')
 def driver():  # replace request with driver to run the test on lambdatest
     # For this example, we will use Firefox
     # You can change this fixture to use other browsers, too.
@@ -30,7 +30,7 @@ def driver():  # replace request with driver to run the test on lambdatest
     dri.quit()
 
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def page_of_items(driver):
     return Items_page(driver)
 
